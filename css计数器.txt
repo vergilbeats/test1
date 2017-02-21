@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>css计数器</title>
+<style>
+.counter {/*计数器名称*/
+	counter-reset: liCount;
+}
+.counter li::after {/*计数器内容*/
+	content: counters(liCount, '-') '. ';
+	content: counter(liCount);
+}
+.counter li {/*计数器规则，默认为+1*/
+	counter-increment: liCount;
+}
+</style>
+</head>
+<body>
+<ul class="counter">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+</body>
+</html>

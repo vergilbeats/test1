@@ -1,0 +1,10 @@
+　优化显示文本
+
+　　有时，字体并不能在所有设备上都达到最佳的显示，所以可以让设备浏览器来帮助你：
+
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+　　注：请负责任地使用 optimizeLegibility。此外，IE /Edge没有 text-rendering 支持。

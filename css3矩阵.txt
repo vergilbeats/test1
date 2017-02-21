@@ -1,0 +1,30 @@
+transform: matrix(a,b,c,d,e,f);
+
+┏ a c e ┓ ┏ x ┓  ┏ ax + cy + e ┓
+┃ b d f ┃.┃ y ┃= ┃ bx + dy + f ┃
+┗ 0 0 1 ┛ ┗ 1 ┛  ┗ 0  + 0  + 1 ┛
+
+标准坐标
+matrix(1,0,0,1,0,0)
+位移
+transform:matrix(1,0,0,1,x,y) == transform: translate(x,y)
+缩放
+transform:matrix(x,0,0,y,0,0) == transform: scale(x,y)
+旋转
+transform:matrix(cosθ,sinθ,-sinθ,cosθ,0,0) == transform: rotate(θdeg)
+倾斜
+transform:matrix(1,tan(y),tan(x),1,0,0) == transform: skew( x deg，y deg )
+
+http://help.adobe.com/zh_CN/FlashPlatform/reference/actionscript/3/flash/geom/Matrix3D.html
+matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n)[16位参数]
+		方向		平移
+┏ scaleX		0	0	x  ┓ 
+┃0		scaleY	0	y  ┃
+┃0		0	scaleZ	z  ┃
+┗0		0	0	w ┛ 
+x轴		y轴	z轴
+matrix3d( 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1）1:1缩放
+┏ 1	0	0	0 ┓ 
+┃ 0	1	0	0 ┃
+┃ 0	0	1	0 ┃
+┗ 0	0	0	1 ┛ 

@@ -1,0 +1,10 @@
+columns:200px 3;
+如果是块元素没有定义宽度，属性定义的200px会失效，但是会3等分。
+column-gap:20px;
+控制间隙宽度
+column-span:(1/all)
+参数为1时，该元素将收到分栏的影响，为all时，将不受影响
+column-rule
+此处rule理解为border，参数示例：
+2px dashed red;
+显示为间隙中间的border

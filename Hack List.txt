@@ -1,0 +1,15 @@
+/* 针对ie的hack */
+selector {
+     property: value\9;   /* 所有IE浏览器 */ 
+     property: value\0;   /* IE8 */
+     +property: value;    /* IE7 */
+     _property: value;    /* IE6 */
+     *property: value;    /* IE6-7 */
+}
+-moz-适合 FF3.6+ 
+-webkit- 适合 Chrome,Safari4+ 
+-o- 适合Opera 11.10+
+-ms-适合IE10+ 
+
+透明度
+filter:alpha(opacity=50);

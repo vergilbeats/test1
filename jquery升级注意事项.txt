@@ -1,0 +1,202 @@
+背景
+--------------------------------------------------------------------------------
+jQuery想必各个web工程师都再熟悉不过了，不过现如今很多网站还采用了很古老的jQuery版本。其实如果早期版本使用不当，可能会有DOMXSS漏洞，非常建议升级到jQuery 1.9.x或以上版本。前段时间我就主导了这件事情，把公司里我们组负责的项目jQuery版本从1.4.2升级到了jQuery 1.11.3。jQuery官方也为类似升级工作提供了jQuery Migrate插件。
+言归正传。
+坑从何处来
+--------------------------------------------------------------------------------
+jQuery 1.11.3是1.x时代的最后一个版本（作者更新：2016年1月8日，jQuery 1.12.0上线，jQuery 1.11.3不再是1.x时代最后一个版本了），由于我的部门项目已经有一定年头了，当时还是采用的jQuery 1.4.2，这次升级步子迈得算是比较大。早期时候jQuery的很多写法，在新版本中已经被废弃，亦或者有些不规范的写法，当时版本还能支持，但是现在已经不支持。更糟糕的情况是，新版本还支持，但是功能已经和以前不一样了……这种情况连个错都不会报，需要深入到代码逻辑里面去看。
+jQuery官方推荐了jQuery Migrate 库来解决jQuery升级问题。不过一直采用这个库终究不是长久之计，开发中建议使用jQuery Migrate的开发版，可以在浏览器控制台上打印出来不兼容的地方详细信息。需要注意的是开发中一定要使用jQuery Migrate的开发版，因为压缩版的是不会在控制台给出警告的……把jQuery Migrate的库紧跟在jQuery库后面引用即可：
+
+<script src="<path>/<to>/jquery-1.11.3.js"></script>
+<script src="<path>/<to>/jquery-migrate-1.2.1.js"></script>
+
+等升级完毕，确定没问题了之后，再将jQuery Migrate库去掉就可以了。根据个人经验，下面我把坑分成 常见坑，少见坑两类来论述。
+常见坑
+--------------------------------------------------------------------------------
+1. 使用了被废弃的jQuery.fn.live方法
+jQuery Migrate库对此错误也在控制台有相应的警告：
+JQMIGRATE: jQuery.fn.live() is deprecated 
+live方法原本的作用是设置事件代理，该方法在jQuery 1.7之后就不推荐使用了，取代之的是jQuery.fn.on函数。他们的接口分别是：
+
+$(selector).live('click', function(){/* some code */});
+$(selector).on('click', [selector,] function(){/* some code */});
+
+乍一看，中括号里面的参数可以省略掉，俩函数不是一模一样么？于是天真地把函数名live直接替换成on，大部分时候，这么做好像没有引起任何异常。但是如果在你调用on函数的时候，前面的$(selector)在当前的网页上根本不匹配任何元素（该元素可能是后面的代码才加到DOM里的），那是不会绑定成功的。事实上，live函数将$(selector)代理到了document元素上，这个元素是肯定存在的，所以不会出现类似情况。正确的替换方法应该是：
+
+$(selector).live('click', function(){/* some code */}); 替换为
+$(document).on('click', selector, function(){/* some code */});
+
+2. 使用了被废弃的jQuery.fn.die方法
+jQuery Migrate对此错误的警告是：
+JQMIGRATE: jQuery.fn.die() is deprecated 
+这个方法和前面的live刚好反过来，取消事件处理函数的绑定。新版本中应该使用off函数代替之，替换方式类似。
+3. 使用了被废弃的jQuery.fn.toggle函数
+jQuery Migrate对此错误的警告是：
+JQMIGRATE: jQuery.fn.toggle(handler, handler...) is deprecated
+早期jQuery中名字叫toggle的函数有两个，一个是用于控制元素的显示和隐藏，这个用途的函数目前jQuery中依旧存在；另一个就是上面提到的被废弃的toggle函数，它用于绑定至少两个函数到同一个元素，点击该元素的时候两个函数交替着执行。这两个同名函数功能相差甚远，为了不引起误导，在jQuery 1.8中就不再建议使用了。替换的方式是把两个函数合并成一个函数的if-else两个区段，然后自己设置一个boolean变量，控制每次点击时应该执行哪个区段即可。
+4. 使用了被废弃的jQuery.browser属性
+jQuery Migrate对此错误的警告是：
+JQMIGRATE: jQuery.browser is deprecated
+在前端开发中我们经常要根据不同的浏览器版本做出不同的处理，jQuery.browser本来是通过浏览器的userAgent字段来提取浏览器相关信息的。新版本中已经将其废弃，而是建议使用特征检测的方法去判断，并且给了一个Modernizr库作为推荐。不过，改成这个库可能改动成本有点大，如果你还是想沿用jQuery.browser的思路的话，可以自己去实现一下它。例如，判断是不是IE浏览器，可以用
+/msie/.test(navigator.userAgent.toLowerCase());
+即自己手动获取userAgent字段，并且做一个正则表达式匹配。其他浏览器思路类似，都是对navigator.userAgent做一个正则匹配。
+5. $(html)格式书写错误
+在jQuery Migrate中，出现以下三种警告中的任何一种，都是属于这个错误：
+JQMIGRATE: $(html) HTML strings must start with '<' character
+JQMIGRATE: $(html) HTML text after last tag is ignored
+JQMIGRATE: HTML string cannot start with a '#' character
+这个错误还是蛮值得注意的，因为我们文章开头所说的jQuery低版本有XSS漏洞，其实就是和这个错误有关系。在javascript中我们经常会直接将一段html格式的字符串写在jQuery引用里面，比如$('<div></div>')。按照新版本的jQuery要求，这段html格式的字符串必须是以左尖括号（小于号）开头，其他字符都不可以。以下几种写法，都是错误的：
+$(" <div></div>"); //错误，字符串最开头有一个空格，不是以小于号'<'开头的
+$("<div></div>test"); //不标准，html标签结束后后面还有多余的"test"，它会被忽略
+$("#<div></div>); //错误，以井号开头并且后面并不是一个css选择器
+这一点在书写的时候注意一下就可以了，其实还是很容易避免的。其中第三种错误其实就不仅仅是警告了，jQuery会直接抛出一个错误，停止javascript代码的继续执行。一般情况以井号开头，例如$("#test")，其实就是一个普通的选择器，但是上面例子中后面又夹杂着html字符串，这会被jQuery判断为潜在的XSS攻击。
+6. jQuery.fn.attr方法的错误使用（这是个非常易犯的错误！）
+jQuery Migrate中，关于attr方法的警告有以下这些：
+JQMIGRATE: jQuery.fn.attr('value', val) no longer sets properties
+JQMIGRATE: jQuery.fn.attr('value') no longer gets properties
+JQMIGRATE: jQuery.fn.attr('checked') may use property instead of attribute
+JQMIGRATE: jQuery.fn.attr( props, pass ) is deprecated
+实践中我发现，早期写的代码里面，获取一个input输入表单的值时，是怎么获取的呢？$('input').attr('value')；又是怎么设置的呢？$('input').attr('value', 'helloworld')。这在新版本中都是不正确的！正确的做法应该是
+$('input').val(); //获取input表单现在所输入的值
+$('input').val('helloworld'); //设置input表单输入的值 
+到底是获取还是设置，只取决于调用val方法时有没有带着参数。
+如果你想手动设置单选框（例如<input type="radio" >）被选中，应该怎么设置呢？老的代码里面可能会看到这样 $('input').attr('checked', true)或者$('input').attr('checked', 'checked')。这些现在也都是不正确的！正确的做法应该是
+$('input').prop('checked', true); //把单选框设为选中状态
+$('input').prop('checked'); //获取单选框是不是被选中了，返回true或false
+这是从jQuery 1.6版本开始使用的写法。如果设置disabled和selected属性，也是使用prop方法。那到底什么时候使用attr方法呢？两者的区别是：prop设置的是某元素固有的属性，而attr设置的是写在html标签上的自定义属性。举个例子：
+
+<input type="checkbox" checked="checked" haha="hello" >
+var v1 = $('input').prop("checked"); //返回true/false，是否被选中，随状态改变而改变
+var v2 = $('input').attr("checked"); //返回"checked"，这是你设置在标签上的，不会变
+var v3 = $('input').attr("haha"); //返回"hello"，自定义属性
+var v4 = $('input').prop("haha"); //返回undefined，根本没有这个固有属性
+
+上面提到的第四个错误，jQuery.fn.attr(props, pass) is deprecated这个警告在真实项目中从未见到过，看了一下源码，触发该警告的jQuery写法很少见，可忽略。
+7. 向$.parseJSON传入了非法的参数
+在jQuery Migrate中，该错误产生如下警告
+JQMIGRATE: jQuery.parseJSON requires a valid JSON string
+jQuery之所以改这个接口，是为了和浏览器自带的JSON.parse接口对齐，从jQuery 1.9开始生效。这个问题常见于AJAX接收服务端返回值的时候。服务端可能返回一个空字符串，这时候调用该接口会产生错误。必须向$.parseJSON传入合法的JSON字符串。修正方法如下：
+
+var v1 = $.parseJSON(str); 替换为
+var v1 = $.parseJSON( str ? str : "null" );
+
+8. 使用了被废弃的'hover'事件字符串
+在jQuery Migrate中该错误产生如下警告
+JQMIGRATE: 'hover' pseudo-event is deprecated, use 'mouseenter mouseleave'
+在注册事件处理函数时，'hover'以前可以看作是'mouseenter mouseleave'两个事件的别称。目前已经将该别称去掉了，所以代码中请用'mouseenter mouseleave'替换之。
+9. jQuery.fn.andSelf已经被替换，不能再使用
+jQuery Migrate中是这样的警告：
+JQMIGRATE: jQuery.fn.andSelf() replaced by jQuery.fn.addBack()
+两个函数功能是完全一样的，可以直接替换。
+以上，就是在jQuery升级中常见的问题，当然，本着精益求精的精神，我们还是需要研究一下不常见的问题是什么样子的。需要指出的是：下面的问题在我的实际项目中从来没有碰到过，比较少见，但也无法保证一定不会出现在你的项目中，仅供感兴趣的程序员们参考吧。
+少见坑
+--------------------------------------------------------------------------------
+1. jQuery不兼容浏览器的怪异模式
+这个错误的触发方式非常简单，直接把html页面最顶端的<!DOCTYPE html>标签删掉就可以了。浏览器怪异模式是为了兼容老古董网页而设计的，详情可参考这篇文章：链接。我想现在的WEB程序员应该不会傻到不写DOCTYPE，也很少使用这种模式下的浏览器吧。
+jQuery Migrate展示的错误警告如下：
+2. AJAX全局事件必须绑定到document节点上
+jQuery Migrate中的警告如下：
+JQMIGRATE: AJAX events should be attached to document: ajaxStart
+jQuery中AJAX全局事件包括如下接口ajaxStart, ajaxStop, ajaxSend, ajaxComplete, ajaxError, ajaxSuccess。因为这些事件使用的比较少，所以也归在少见坑当中。从jQuery 1.9开始，这些事件只能绑定到$(document)上。改正方法如下（摘自jQuery官网）：
+
+$("#status").ajaxStart(function(){ $(this).text("Ajax started"); }); 修改为
+$(document).ajaxStart(function(){ $("#status").text("Ajax started"); });
+
+3. IE6/7/8浏览器不支持修改input表单的type属性
+在jQuery Migrate中是这样的警告：
+JQMIGRATE: Can't change the 'type' of an input or button in IE 6/7/8
+改变input的表单的type属性，你可以直接把文本框改成单选框，改成多选框等等。虽然我感觉这是一种并不算优雅的行为，但是很多浏览器都是支持这么做的，除了IE6/7/8。建议在实际中也是少用这个功能为好。
+4. 使用了被移除的$.clean, $.event.handle, $.attrFn, $.fn.data('events'), jQuery.event.trigger属性与方法
+在jQuery Migrate中是这样的警告：
+JQMIGRATE: jQuery.clean() is deprecated
+JQMIGRATE: jQuery.event.handle is undocumented and deprecated
+JQMIGRATE: jQuery.attrFn is deprecated
+JQMIGRATE: Use of jQuery.fn.data('events') is deprecated
+JQMIGRATE: Global events are undocumented and deprecated
+如果你在自己的代码中使用过这五个接口，那确实是仔细研究过jQuery源代码的高人啊。因为这五个接口从来没有出现在jQuery的官方文档中，并且有些在后续版本中已经删除，可谓来无影去无踪。看源代码的话在早期版本有机会找到他们的存在，但是并不建议使用。建议采用其他方法实现相应的功能。什么？你不知道这五个函数是什么功能？那最好了，你现在也不需要知道了……
+5. 使用了过时的$.sub()方法
+jQuery Migrate中对本问题的警告如下：
+JQMIGRATE: jQuery.sub() is deprecated 
+这个接口非常简单，不接受任何参数。它用来创建一个jQuery的副本。该方法在jQuery 1.7版本开始就已经不再使用。
+6. 使用了过时的jQuery.fn.error方法
+jQuery Migrate中对本问题的警告如下：
+JQMIGRATE: jQuery.fn.error() is deprecated 
+在jQuery中，error也是和click一样的事件。注册该事件的处理函数，以前是$(selector).error(function(){})，现在已经被废弃，可以使用$(selector).on('error', function(){})来替代。
+示例代码
+--------------------------------------------------------------------------------
+本文既然自称为“XX大全”，那就应该尽量的全面一些。为了搞明白这些坑是怎么踩进去的，我们最后来写一段js代码，要求是用最少的代码，把jQuery Migration库中所有的坑都踩一遍……也就是让jQuery Migration库打印出来它能打印的所有代码。最终的代码如下所示（博客园竟然没有办法上传附件，只能贴代码了），非常简单易懂。打开index.html文件，然后再按F12键打开控制台，你就可以看到壮观宏伟的控制台警告了^_^
+
+<!-- filename : index.html --><!--<!DOCTYPE html>--> //keng0 怪异模式
+<html>
+<head>
+<meta charset="utf-8" />
+<title>jQuery升级踩坑大全</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js" ></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.js" ></script>
+</head>
+<body>
+<div class="test" id="a">a</div>
+<input type="radio" id="b" value="b" />
+<input type="radio" id="c" value="c" />
+<div id="d" value="d">test</div>
+<script type="text/javascript">
+//开始踩坑
+//使用被废弃分$.attrFn方法
+var keng1 = $.attrFn || {};
+//该函数在jQuery内部调用，真实项目中从未见过，可忽略，这里只是为了触发一下错误警告
+var keng2 = $.attr($("#a"), "class", "xxx", true);
+//IE6、7、8中不支持改变输入框的类型
+var keng3 = $("input#b").attr("type", "text");
+//在该使用prop的地方使用了attr
+var keng4 = $("input#c").attr("checked", true);
+//使用attr获取property的值，正确的是应该使用 .val()
+var keng5 = $("div#d").attr("value");
+//使用attr设置property的值，正确的是应该使用 .val('somevalue')
+var keng6 = $("div#d").attr("value", "abcd");
+//html字符串必须以'<'开头(下面这个是以空格开头)
+var keng7 = $(" <div></div>");
+//最后一个tag后面还有多余字符串
+var keng8 = $("<div></div>abc");
+//html字符串不可以以井号‘#'开头
+try{
+var keng9 = $("#<div></div>");
+}catch(e){
+console.error(e);
+}
+//$.parseJSON的参数必须是合法的JSON字符串
+var keng10 = $.parseJSON(undefined);
+//使用被废弃的$.browser
+var keng11 = $.browser;
+//使用被废弃的$.sub
+var keng12 = $.sub();
+$("#c").on("click", function(){});
+var keng13 = $("#c").data("events");
+//调用了已经不再使用的函数andSelf，该函数已经被addBack替代
+var keng14 = $("#c").nextAll().andSelf();
+//使用被废弃的$.clean方法
+try{
+var keng15 = $.clean();
+}catch(e){
+console.error(e);
+}
+//"hover"字符串注册事件已经被拆成"mouseenter"和"mouseleave"两个
+var keng16 = $("#d").on("hover", function(){/*some code*/});
+//jQuery.event.handle并没有收录到官方的API中，新版本已经被移除
+var keng17 = function(){
+$.event.handle.apply(this, arguments);
+};
+//全局AJAX事件处理必须绑定到document对象上
+var keng18 = $("#c").ajaxStart(function(){});
+//使用了被废弃的error方法
+var keng19 = $("#c").error(function(){});
+//使用了被废弃的toggle方法
+var keng20 = $("#d").toggle(function(){/*some code*/}, function(){/*some code*/});
+//使用了被废弃的live方法，应该使用on方法替代之
+var keng21 = $("#a").live("click", function(){/*some code*/});
+//使用了被废弃的die方法，应该使用off方法替代之
+var keng22 = $("#a").die("click");
+//使用了全局事件函数，目前全局事件只支持AJAX那几个，其他全局事件都不支持
+var keng23 = $.event.trigger("click"); 
+</script>
+</body>
+</html>

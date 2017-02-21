@@ -1,0 +1,3 @@
+$('#changePhone').click(function(e) {
+	window.parent.$('.mask').show();
+});

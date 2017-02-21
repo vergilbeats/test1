@@ -1,0 +1,11 @@
+	 setTimeout(function() {
+		 var
+		 real_width,
+		 real_height,
+		 _im         = document.getElementById('items1'),
+		 im          = document.createElement('img');
+		 im.src      = _im.src,
+		 real_width  = im.width,
+		 real_height = im.height;
+		 //alert(real_width+'\n'+real_height);
+	 },500);

@@ -1,0 +1,6 @@
+<link href="images/favicon.ico" rel="Icon" type="image/x-icon" >
+<link href="images/favicon.ico" rel="shortcut Icon" type="image/x-icon" >
+<link href="images/favicon.ico" rel="bookmark" type="image/x-icon" />
+icon tab
+shortcut µÿ÷∑¿∏
+bookmark À—≤ÿ¿∏

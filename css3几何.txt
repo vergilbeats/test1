@@ -1,0 +1,6 @@
+shape-outside:inset(10px 20px 10% 0);
+
+inset() = inset( {1,4} [round ]? ) //凹形
+circle() = circle( []? [at ]? )		//圆形
+ellipse() = ellipse( [{2}]? [at ]? )  //椭圆形
+polygon() = polygon( [,]? [ ]# )	//多边形

@@ -1,0 +1,3 @@
+<input type="radio" id="btn01" />
+<label for="btn01"></label>
+label标签通过for属性同radio绑定

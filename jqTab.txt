@@ -1,0 +1,22 @@
+<script>
+	$('.tabTop').click(function(e) {
+        $('.tabTop').removeClass("hover");
+        $(this).addClass("hover");
+		var choiceValue = $(this).index();
+        $('.tablist').removeClass("hover");
+        $('.tablist').eq(choiceValue).addClass("hover");
+    });
+</script>
+
+$('.toolItem').click(function(e) {
+        $(this).parent().find('.toolItem').removeClass("active");
+        $(this).addClass("active");
+		var choiceValue = $(this).attr("id");
+		var arr = choiceValue.match(/(\d)*$/g);
+		arr += "";
+		var arr2 = arr.substr(0,arr.length-1);
+        $(this).parent().parent().find('.tabItem').removeClass("active");
+		var choiceBox = "#tabItem"+arr2+"";
+        $(choiceBox).addClass("active");
+    });
+

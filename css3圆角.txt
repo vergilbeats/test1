@@ -1,0 +1,5 @@
+border-bottom-right-radius: length|% [length|%];
+.box {
+  border-radius: 5px 5px 3px 2px / 5px 5px 1px 3px;
+}
+border-radius: вСио╨А срио╨А сроб╨А вСоб╨А/вСиойЗ сриойЗ сробйЗ вСобйЗ;

@@ -1,0 +1,3 @@
+var audio = $("#audio")[0];  
+audio.pause();  
+audio.play();  

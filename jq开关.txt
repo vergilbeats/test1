@@ -1,0 +1,8 @@
+$("#switch").toggle(
+	function(){
+	$("#fixedBox").animate({right:"-151px"});},
+	function(){
+	$("#fixedBox").animate({right:"0px"});}
+);
+
+注意：会阻止checkbox选中

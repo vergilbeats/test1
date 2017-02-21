@@ -1,0 +1,11 @@
+$("button").click(function(){
+  var div=$("div");
+  div.animate({height:'toggle',opacity:'0.4'},"slow");
+  div.animate({width:'+=150px',opacity:'0.8'},"999");
+  div.animate({paddingLeft :'100px',opacity:'0.4'},"slow");
+  div.animate({width:'3em',opacity:'0.8'},"fast");
+});
+提示：可以用 animate() 方法来操作所有 CSS 属性吗？
+是的，几乎可以！不过，需要记住一件重要的事情：当使用 animate() 时，必须使用 Camel 标记法书写所有的属性名，比如，必须使用 paddingLeft 而不是 padding-left，使用 marginRight 而不是 margin-right，等等。
+同时，色彩动画并不包含在核心 jQuery 库中。
+如果需要生成颜色动画，您需要从 jQuery.com 下载 Color Animations 插件。

@@ -1,0 +1,32 @@
+box-reflect：none | <direction> <offset>? <mask-box-image>?
+-webkit-box-reflect:below 0 -webkit-linear-gradient(transparent,transparent 50%,rgba(255,255,255,.3));
+
+none：
+无倒影
+<direction>
+above：
+指定倒影在对象的上边
+below：
+指定倒影在对象的下边
+left：
+指定倒影在对象的左边
+right：
+指定倒影在对象的右边
+<offset>
+<length>：
+用长度值来定义倒影与对象之间的间隔。可以为负值
+<percentage>：
+用百分比来定义倒影与对象之间的间隔。可以为负值
+<mask-box-image>
+none：
+无遮罩图像
+<url>：
+使用绝对或相对地址指定遮罩图像。
+<linear-gradient>：
+使用线性渐变创建遮罩图像。
+<radial-gradient>：
+使用径向(放射性)渐变创建遮罩图像。
+<repeating-linear-gradient>：
+使用重复的线性渐变创建背遮罩像。
+<repeating-radial-gradient>：
+使用重复的径向(放射性)渐变创建遮罩图像。

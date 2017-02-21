@@ -1,0 +1,36 @@
+-webkit-filter:saturate(5) hue-rotate(5deg) grayscale(0.3) sepia(0.7) contrast(1.5) invert(0.2) brightness(.9);
+注意！：滤镜特效影响范围是按照文档结构，z-index不能避免；
+    -webkit-filter: blur(10px);
+       -moz-filter: blur(10px);
+        -ms-filter: blur(10px);    
+            filter: blur(10px);
+
+grayscale灰度0~1
+-webkit-filter:grayscale(0.5);
+
+sepia怀旧0~1
+-webkit-filter:sepia(0.5);
+
+saturate饱和度0~1
+-webkit-filter:saturate(0.5);
+
+hue-rotate色相旋转0deg~360deg
+-webkit-filter:hue-rotate(90deg);
+
+invert反色0/1
+-webkit-filter:invert(1);
+
+opacity透明度0~1
+-webkit-filter:opacity(.2);
+
+brightness亮度0~1
+-webkit-filter:brightness(.5);
+
+contrast对比度1~?
+-webkit-filter:contrast(2);
+
+blur模糊0~?
+-webkit-filter:blur(3px);
+
+drop-shadow阴影
+-webkit-filter:drop-shadow(5px 5px 5px #ccc);

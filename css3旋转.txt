@@ -1,0 +1,12 @@
+transform-origin: bottom left
+旋转基点左下角
+
+Rotate 3d
+rotate3d(x,y,z,angle)
+transform:rotate3d(1,0,1,22deg);
+1正轴
+0无
+-1负轴
+x水平轴
+y垂直轴
+z垂直屏幕轴

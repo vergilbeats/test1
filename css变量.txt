@@ -1,0 +1,13 @@
+:root {
+ --ºşÀ¶: #369;
+ --1:red;
+ --orange:#f60;
+}
+body {
+    background-color: var(--ºşÀ¶);
+ color:var(--1);
+}
+body:after {
+    content: "var(--orange)";
+    color: var(--orange);
+}

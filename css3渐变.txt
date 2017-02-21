@@ -1,0 +1,40 @@
+1]线性渐变
+background: linear-gradient(180deg, red, blue); /* 标准的语法 */
+
+角度是指水平线和渐变线之间的角度，逆时针方向计算。换句话说，0deg 将创建一个从下到上的渐变，90deg 将创建一个从左到右的渐变。
+但是，请注意很多浏览器(Chrome,Safari,fiefox等)的使用了旧的标准，即 0deg 将创建一个从下到上的渐变，90deg 将创建一个从左到右的渐变。换算公式 90 - x = y 其中 x 为标准角度，y为非标准角度。
+
+2]椭圆渐变
+radial-gradient([[<shape> || <size>] [at <position>]?,| at <position>,]?<color-stop>[,<color-stop>]+);
+    background:radial-gradient(44px at center bottom,#0791d4,#4b4d53);
+
+background-image: radial-gradient(半径 半径 ellipse at 坐标,颜色 宽度,颜色 宽度,...颜色 宽度);
+background-image: radial-gradient(半径 circle at 坐标,颜色 宽度,颜色 宽度,...颜色 宽度);
+<position>
+
+ left：设置左边为径向渐变圆心的横坐标值。
+ center：设置中间为径向渐变圆心的横坐标值或纵坐标。
+ right：设置右边为径向渐变圆心的横坐标值。
+ top：设置顶部为径向渐变圆心的纵标值。
+ bottom：设置底部为径向渐变圆心的纵标值。
+
+<shape>：主要用来定义径向渐变的形状。其主要包括两个值“circle”和“ellipse”
+
+<size>：主要用来确定径向渐变的结束形状大小。如果省略了，其默认值为“farthest-corner”。
+ closest-side：指定径向渐变的半径长度为从圆心到离圆心最近的边；
+ closest-corner：指定径向渐变的半径长度为从圆心到离圆心最近的角；
+ farthest-side：指定径向渐变的半径长度为从圆心到离圆心最远的边；
+ farthest-corner：指定径向渐变的半径长度为从圆心到离圆心最远的角；
+
+3]属性渐变
+div{
+width:100px;
+transition: width 2s;
+-moz-transition: width 2s; /* Firefox 4 */
+-webkit-transition: width 2s; /* Safari 和 Chrome */
+-o-transition: width 2s; /* Opera */
+}
+div:hover{width:300px;}
+允许多种属性一起写，但是要用,隔开，所用属性用all
+transition:width 2s,height 1s;
+transition:all 0.5s;

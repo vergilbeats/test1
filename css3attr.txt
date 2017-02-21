@@ -1,0 +1,8 @@
+::after {
+   content: "(" attr(title) ")";
+}
+attr可以取标签各种属性，不管是否符合标准，
+例如：
+<img whatareudoing="狗带"/>
+content: "(" attr(whatareudoing) ")";
+显示（狗带）
