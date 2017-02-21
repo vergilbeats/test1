@@ -1,0 +1,14 @@
+$(document).ready(function(e) {
+    $('.arror').click(function(e) {
+        open($('#studentType'));
+    });
+});
+function open(elem) {
+    if (document.createEvent) {
+        var e = document.createEvent("MouseEvents");
+        e.initMouseEvent("mousedown");
+        elem[0].dispatchEvent(e);
+    } else if (element.fireEvent) {
+        elem[0].fireEvent("onmousedown");
+    }
+}

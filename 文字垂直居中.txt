@@ -1,0 +1,5 @@
+vertical-align:middle;
+给块级元素子类元素使用，其子类元素必须是inline或者inline-block，
+子类元素不能浮动，不能绝对定位，固定定位。
+
+给td、th使用时，子类元素限制如上。

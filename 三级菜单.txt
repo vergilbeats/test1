@@ -1,0 +1,31 @@
+<script>
+$(document).ready(function(e) {
+	$(".list1:nth-child(2)").addClass("active");
+	$(".list1.active .list2").slideDown(333);
+	$(".list1.active .list2:nth-child(2)").addClass("active")
+	$(".list1.active .list2.active .list3").slideDown(333);
+    $('.list1 .txt').click(function(e) {
+		var list1Name = $(this).parent().attr("class");
+		if(list1Name=="list1 active"){
+			$(this).parent().removeClass("active");
+			$(this).parent().find('.list2').removeClass("active").slideUp(333);
+			$(this).parent().find('.list3').slideUp(333);
+		}
+		else{
+			$(this).parent().addClass("active");
+			$(this).parent().find('.list2').slideDown(333);
+		}
+    });
+    $('.list2 .list2Txt').click(function(e) {
+		var list2Name = $(this).parent().attr("class");
+		if(list2Name=="list2 active"){
+			$(this).parent().removeClass("active");
+			$(this).parent().find('.list3').slideUp(333);
+		}
+		else{
+			$(this).parent().addClass("active");
+			$(this).parent().find('.list3').slideDown(333);
+		}
+    });
+});
+</script>

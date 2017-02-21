@@ -1,0 +1,4 @@
+.my-element {
+  background-image: url(fallback.png);
+  background-image: url(image.svg), none;/*支持多svg的浏览器都支持多背景*/
+}

@@ -1,0 +1,4 @@
+<a href="tel:18688888888">拨号</a>   
+<a href="sms:18688888888">发短信</a>
+<a href="mailto:a123@qq.com">发邮件</a>
+

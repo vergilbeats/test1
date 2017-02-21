@@ -1,0 +1,6 @@
+       $("#if1").change(function(e){//上传控件监控事件
+		var fileObj=document.getElementById("if1");
+		var objectURL = window.URL.createObjectURL(fileObj.files[0]);
+		var img = document.getElementById('payment');//图片ID
+		img.src = objectURL;
+      });

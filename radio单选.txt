@@ -1,0 +1,2 @@
+<input type="radio" name="">
+在所有radio使用同一个name可以实现单选

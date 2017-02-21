@@ -1,0 +1,13 @@
+1]类型
+function myRandom(vMax,vMin){//min~max随机数
+	var myRandom = Math.round(Math.random()*(vMax-vMin)+vMin);
+	return myRandom;
+}
+如果不先进行装换
+	vMax = parseFloat(vMax);
+	vMin = parseFloat(vMin);
++vMin操作会当作字符串进行拼接
+
+2]和差
+16进制数与字符串，10进制进行比较的时候容易出错，转换成10进制比较完成之后，再转16进制。
+

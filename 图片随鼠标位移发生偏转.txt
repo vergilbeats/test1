@@ -1,0 +1,33 @@
+    //图片随鼠标位移发生偏转start
+    $('#SimpleProcess').mouseover(function(){
+    	var winW = $('body').width(),
+    		winH = $('#SimpleProcess').height(),
+    		defX = winW/2,//中线坐标
+    		relativeWidth = 0,//中心偏移量
+    		imgDeg,//旋转角度
+    		defDeg =35,//参考旋转角度
+    		degString = "";//css参数
+    	$('#SimpleProcess').mousemove(function(){
+    		var mouseX = event.clientX;//鼠标屏幕横轴坐标
+        	$('#xPosition span').text(mouseX);//鼠标坐标监视
+        	
+        	relativeWidth = mouseX-defX;
+        	if(mouseX<defX){//当相对位移量为负数时处理办法
+        		imgDeg = Math.sqrt(-1*relativeWidth/winH);//开方不处理负值
+        		imgDeg *=-1;//重新转负值
+    		}else{
+    			imgDeg = Math.sqrt(relativeWidth/winH);
+    		}
+        	imgDeg *=defDeg/4;//角度可能不符合预期，再次削减
+        		if(imgDeg<0){//旋转方法默认负值等于正值，必须加360度实现
+        			imgDeg += 360;
+        		}
+        		//imgDeg = imgDeg.toFixed(1);//限制小数位数
+        		imgDeg = 0;
+        		$('#degPosition span').text(imgDeg);//角度监视
+        		$('#relaWid span').text(relativeWidth);//偏移量监视
+        		degString = "rotateY("+imgDeg+"deg)";//css参数拼接
+        		$('#SimpleProcess .img').css("-webkit-transform",degString);
+    	});
+    });
+    //图片随鼠标位移发生偏转end

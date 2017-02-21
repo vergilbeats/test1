@@ -1,0 +1,14 @@
+╫╔╠Дндвж
+{
+font-size: 30px;
+background: -webkit-linear-gradient(top,#fc0,#f30 50%,#c00 51%,#600);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+Он©ундвж
+{
+font-size: 30px;
+-webkit-text-fill-color: transparent;
+-webkit-text-stroke: 1px #fff;
+background:#000;width:300px
+}

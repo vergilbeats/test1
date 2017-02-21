@@ -1,0 +1,4 @@
+input {
+    outline-offset: 4px ;
+}
+　　调节该属性值的大小你就可以看到outline的距离变化了。

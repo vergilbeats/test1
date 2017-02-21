@@ -1,0 +1,2 @@
+table-layout:fixed/*table属性*/
+列宽由表格宽度和列宽度设定。

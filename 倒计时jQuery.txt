@@ -1,0 +1,18 @@
+	    $('#msgBtn').click(function(e) {
+		//倒计时总秒数
+		var mTime = 60;
+		//间隔毫秒
+		var refreshT = 1000;
+		//防止连续点击
+		$('#msgBtn').attr("disabled","disabled");
+		var deadline = self.setInterval(function(){
+		mTime--;
+		$('#msgBtn').val(""+mTime+"秒后重发");
+		if(mTime==0){window.clearInterval(deadline);}
+		},refreshT);
+		
+		setTimeout(function(){
+			$('#msgBtn').val("重新发送");
+		$('#msgBtn').removeAttr("disabled");
+		},(mTime+1)*refreshT);
+    });

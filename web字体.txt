@@ -1,0 +1,5 @@
+@font-face{
+ font-family:Flower;
+ src:url(../image/flowers.eot),
+ src:url(../image/flowers.ttf);
+}

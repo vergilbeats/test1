@@ -1,0 +1,6 @@
+CSS3 nth-of-type() Ñ¡ÔñÆ÷
+/*À¶°×±í¸ñ*/
+.dataTable{width:970px;border-bottom:1px solid #cccccc;margin:10px 0;}
+.dataTable tbody tr td{border-top:1px solid #cccccc;height:40px;}
+.dataTable tbody tr{background:#e6f0ff;}
+.dataTable tbody tr:nth-child(2n){background:#0089e4;}

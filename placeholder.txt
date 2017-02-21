@@ -1,0 +1,15 @@
+placeholder="请输入"可以实现以下功能
+value="请输入" onfocus="if (value =='请输入'){value =''}" onblur="if (value ==''){value='请输入'}"
+
+value="请输入" onblur="if(this.value.length<1)this.value=this.defaultValue;" onfocus="if(this.value==this.defaultValue)this.value=''"
+
+颜色设定
+::-moz-placeholder { 
+	color: #369; 
+}
+::-webkit-input-placeholder { 
+	color:#369; 
+}
+:-ms-input-placeholder {
+	 color:#369; 
+}

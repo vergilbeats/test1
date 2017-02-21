@@ -1,0 +1,11 @@
+当多个同类型元素有相等间距
+解决第一个没有或者最后一个没有间距问题
+使用同名类链接给间距
+例如
+.typeItem1~.typeItem1{
+	margin-left:21px;
+}
+或者
+.typeItem1+.typeItem1{
+	margin-left:21px;
+}

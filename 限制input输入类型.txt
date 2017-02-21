@@ -1,0 +1,19 @@
+1.只能输入和粘贴汉字 
+<input onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"><br/> 
+
+2.只能输入和粘贴数字 
+<input onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /><br/> 
+3.数字脚本 
+<input onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}"><br/> 
+
+4.只能输入数字和英文 
+<input onkeyup="value=value.replace(/[\W]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><br/> 
+
+5.简易禁止输入汉字 
+<input style="ime-mode:disabled">输入法不转换，但可粘贴上<br/> 
+
+6.输入数字和小数点 
+<input onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><br/> 
+
+7.只能数字和"-",例如在输入时间的时候可以用到 
+<input onkeyup="value=value.replace(/[^\w&=]|_/ig,'')" onblur="value=value.replace(/[^\w&-]|_/ig,'')" />

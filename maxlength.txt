@@ -1,0 +1,2 @@
+ie9不支持maxlength，用后面代码替代
+<textarea maxlength="300" onchange="this.value=this.value.substring(0, 300)" onkeydown="this.value=this.value.substring(0, 300)" onkeyup="this.value=this.value.substring(0, 300)"></textarea>

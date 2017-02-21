@@ -1,0 +1,14 @@
+:hover		//鼠标移动到元素上
+:active		//鼠标在元素上按下还未松开
+:focus		//元素获得焦点时
+:enabled	//可用状态
+:disabled	//不可用状态
+:read-only	//只读状态
+:read-write	//非只读状态
+:checked	//input处于选取状态
+::selection	//鼠标选中状态
+:default	//默认打开状态
+:indeterminate	//介于checked和unchecked之间
+:target		//激活的锚点
+:before		//元素最前伪类
+:after		//元素最后伪类（<select>不支持before||after）

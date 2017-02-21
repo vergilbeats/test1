@@ -1,0 +1,13 @@
+    $('#arrST').click(function(e) {
+        openS($('#studentType'));
+    });
+
+function openS(elem) {
+    if (document.createEvent) {
+        var e = document.createEvent("MouseEvents");
+        e.initMouseEvent("mousedown");
+        elem[0].dispatchEvent(e);
+    } else if (element.fireEvent) {
+        elem[0].fireEvent("onmousedown");
+    }
+}

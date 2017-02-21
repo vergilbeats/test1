@@ -1,0 +1,8 @@
+< disabled="disabled" readonly="readonly">
+如果是a标签记得href="javascript:;"
+*{
+	pointer-events: none;/*鼠标点击事件略过*/
+	cursor:none;
+	/*border:;边框样式*/
+	/*background:;背景样式*/
+}

@@ -1,0 +1,28 @@
+ 1.  内嵌CSS
+  <defs>
+      <style type="text/css"><![CDATA[
+              rect {
+                  fill:red;
+                  stroke:blue;
+                  stroke-width:3
+             }
+      ]]></style>
+ </defs>
+
+2. 引用外部CSS
+rect {
+                 fill:red;
+                  stroke:blue;
+                  stroke-width:3
+     }
+<?xml version="1.0"  encoding="utf-8" standalone="no" ?>
+<?xml-stylesheet  href="svg.css" type="text/css" ?>
+<svg width="640" height="480">
+      <rect  x="200"   y="100"  width="300"   height="100" />
+</svg>
+另外一种导入外部CSS的引用语句为：
+@import url("G:\Book\Code\svg.css");
+使用class属性
+   .road(color:red)
+   .river(color:blue)
+<path  class="road"  ......./>

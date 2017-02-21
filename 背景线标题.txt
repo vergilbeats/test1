@@ -1,0 +1,27 @@
+<div class="lineTitle small">
+    	<div class="ch">公信力展示</div>
+    	<div class="en">show of the our Credibility</div>
+    </div>
+
+<style>
+.lineTitle{
+	text-align:center;
+}
+.lineTitle .ch{
+	display:inline-block;
+	position:relative;
+	padding:0 20px;
+	font-size:30px;
+	line-height:48px;
+}
+.lineTitle .ch:before,
+.lineTitle .ch:after{
+	content:"";
+	display:block;
+	position:absolute;
+	top:50%;
+	width:28px;
+	height:2px;
+	background:#000;
+}
+</style>

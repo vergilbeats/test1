@@ -1,0 +1,6 @@
+1£º<a href="####"></a>
+2£º<a href="#this"></a>
+3£º<a href="javascript:;"></a>
+4£º<a href="javascript:void(0)"></a>
+5£º<a href="javascript:void(null)"></a>
+6£º<a href="#" onclick="return false"></a>

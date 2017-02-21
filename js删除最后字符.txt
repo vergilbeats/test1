@@ -1,0 +1,25 @@
+字符串：string s = "1,2,3,4,5,"
+
+目标：删除最后一个 ","
+
+方法：
+1、用的最多的是Substring，这个也是我一直用的
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)s=s.Substring(0,s.Length-1)
+
+
+2、用 RTrim，这个我原来只知道用来删除最后的空格，也没有仔细看过其它的用法，才发现可以直接trim掉一些字符
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)s=s.ToString().RTrim(',')
+
+3、用TrimEnd,这个东西和RTrim差不多，区别是这个传递的是一个字符数组，而RTrim可以是任何有效的字符串
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)s=s.TrimEnd(',')
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)//如果要删除"5,"，则需要这么写
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)char[]MyChar={'5',','};
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)s=s.TrimEnd(MyChar);
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)//s="1,2,3,4"
+JS 删除字符串最后一个字符的几种方法 - li_crane - 未来之路(The road ahead)
+
+类似函数：
+TrimStart,LTrim等
+还有一个TrimToSize对提高性能有微弱的好处....
+string.TrimEnd().Remove(string.Length - 2, 1)
+string.Remove()

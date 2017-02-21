@@ -1,0 +1,29 @@
+<div class="space">
+    <a href="##">惆怅</a>
+    <a href="##">淡定</a>
+    <a href="##">热血</a>
+</div>
+
+如上，因为行内元素之间的换行导致
+解决方式1
+<div class="space">
+    <a href="##">
+    惆怅</a><a href="##">
+    淡定</a><a href="##">
+    热血</a>
+</div>
+
+解决方式2
+<div class="space">
+    <a href="##">惆怅</a
+    ><a href="##">淡定</a
+    ><a href="##">热血</a>
+</div>
+
+解决方式3
+<div class="space">
+    <a href="##">惆怅</a><!--
+    --><a href="##">淡定</a><!--
+    --><a href="##">热血</a>
+</div>
+

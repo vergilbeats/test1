@@ -1,0 +1,60 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100" height="100" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<!--viewBox的第三位第四位参数为宽高，值的反比为svg的缩放比率，例如，viewBox宽高/宽高=2，svg缩小一倍。-->
+
+<rect width="300" height="100" style="fill:rgba(0,0,255,0.1);stroke-width:0;"/>
+</svg>
+矩形
+<rect  x="20" y="20" rx="20" ry="20" width="250" height="100" style="fill:red;stroke:black;stroke-width:5;opacity:0.5"/>
+x,y矩形左上角坐标；fill填充颜色;stroke边框颜色;stroke-width边框宽度;opacity整个形状的透明度 rx,ry圆角度
+
+圆形
+<circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
+
+椭圆
+<ellipse cx="300" cy="150" rx="200" ry="80" style="fill:rgb(200,100,50);stroke:rgb(0,0,100);stroke-width:2"/>
+
+直线
+<line x1="0" y1="0" x2="300" y2="300" style="stroke:rgb(99,99,99);stroke-width:2"/>
+
+多边形
+<polygon points="220,100 300,210 170,250" style="fill:#cccccc; stroke:#000000;stroke-width:1"/>
+
+折线
+<polyline points="0,0 0,20 20,20 20,40 40,40 40,60" style="fill:white;stroke:red;stroke-width:2"/>
+
+路径
+<path id="mypath" d="M153 334
+C153 334 151 334 151 334
+C151 339 153 344 156 344
+C164 344 171 339 171 334
+C171 322 164 314 156 314
+C142 314 131 322 131 334
+C131 350 142 364 156 364
+C175 364 191 350 191 334
+C191 311 175 294 156 294
+C131 294 111 311 111 334
+C111 361 131 384 156 384
+C186 384 211 361 211 334
+C211 300 186 274 156 274"
+style="fill:white;stroke:red;stroke-width:2"/>
+<text x="10" y="20" style="fill:green;font-size:12px;">
+	<textPath xlink:href="#mypath">随路径走文字</textPath>
+</text>
+
+如果指令字母是大写的，例如M, 则表示坐标位置是绝对位置；如果指令字母小写的，例如m, 则表示坐标位置是相对位置。
+
+命令	名称							参数								具体说明
+M	moveto ?移动到						(x y)+								路径起始点坐标
+Z	closepath ?关闭路径					(none)								将路径的开始和结束点用直线连接
+L	lineto ?画线到						(x y)+								当前节点到指定(x,y)节点，直线连接
+H	horizontal lineto ?水平线到				x+								保持当前点的y坐标不变，x轴移动到x, 形成水平线
+V	vertical lineto ?垂直线到				y+								保持当前点的x坐标不变，y轴移动到y, 形成垂直线
+C	curveto ?三次贝塞尔曲线到				(x1 y1 x2 y2 x y)+
+S	smooth curveto ?光滑三次贝塞尔曲线到			(x2 y2 x y)+
+Q	quadratic Bézier curveto ?二次贝塞尔曲线到		(x1 y1 x y)+
+T	smooth quadratic Bézier curveto ?光滑二次贝塞尔曲线到	(x y)+
+A	elliptical arc ?椭圆弧					(rx ry x-axis-rotation large-arc-flag sweep-flag x y)+
+R	Catmull-Rom curveto* ?Catmull-Rom曲线			x1 y1 (x y)+
+Catmull-Rom曲线不是标准的SVG命令

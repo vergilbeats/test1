@@ -1,0 +1,7 @@
+<p contenteditable="true">这是一段可编辑的段落。富文本。</p>
+
+p{
+user-modify: read-only;
+user-modify: read-write;/*富文本输入*/
+user-modify: read-write-plaintext-only;/*纯文本输入*/
+}

@@ -1,0 +1,5 @@
+中文
+Heiti SC
+英文
+helvetica neue LT
+建议最小不要过18，其他字号双数，同类字号相同;

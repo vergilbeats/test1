@@ -1,0 +1,2 @@
+-webkit-text-stroke:1px #f00;
+text-stroke:1px #f00;
